@@ -1,17 +1,7 @@
 var twit = require('twit'),
-    config_tw = require('./config_tw_local'),
-    Bittrex = require('node.bittrex.api'),
-    config_bitt = require('./config_bitt_local');
+    config_tw = require('./config_tw_local');
     
-
 var Twitter = new twit(config_tw);
-
-Bittrex.options({
-  'apikey' : config_bitt.apikey,
-  'apisecret' : config_bitt.apisecret, 
-});
-
-
 
 
 
