@@ -3,15 +3,8 @@ var twit = require('twit'),
     
 var Twitter = new twit(config_tw);
 
-fs = require('fs')
     
-var lastSupply = fs.readFileSync('lastSupply.txt', 'utf8',         function (err,data) {
-        if (err) {
-            return console.log(err);
-        }
-
-        return data;
-    });
+var lastSupply = 16522237;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -35,13 +28,6 @@ var differentSupply = function(difference) {
     var messages = " There's new " + difference + " Bitcoin generated since the last tweet. $Bitcoin $BTC #Bitcoin #BTC.";
     
     postTweet(messages);
-    
-    var fs = require('fs'); 
-    var wstream = fs.createWriteStream('lastSupply.txt');
-    wstream.write(lastSupply);
-    wstream.end();
-
-
 }
 
 
