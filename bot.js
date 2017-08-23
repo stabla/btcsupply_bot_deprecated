@@ -1,7 +1,7 @@
-/*var twit = require('twit'),
+var twit = require('twit'),
     config_tw = require('./config');
     
-var Twitter = new twit(config_tw);*/
+var Twitter = new twit(config_tw);
 
 fs = require('fs')
     
@@ -70,15 +70,13 @@ var makeRequest = (function selfInvoking() {
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
 
             console.log(newSupply >= lastSupply);
-            console.log(newSupply + ' new supply ');
-            console.log(lastSupply + ' last supply');
             
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = ( newSupply - lastSupply );
                 lastSupply = newSupply;
                 
-                //differentSupply( difference );
+                differentSupply( difference );
                 
                 console.log('in difference'); /* only for debugging */
             }
