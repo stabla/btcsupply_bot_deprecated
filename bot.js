@@ -28,6 +28,7 @@ var postTweet = function (messages) {
     Twitter.post('statuses/update', params, function (error, tweet, response) {
         if (error) {
             console.log(error);
+            console.log('Tweet already posted');
         }
         console.log(tweet); // Tweet body.
         console.log('Tweeted correctly posted.');
@@ -79,6 +80,8 @@ var makeRequest = (function selfInvoking() {
                 lastSupply = newSupply;
                 
                 differentSupply( difference );
+                
+                console.log('in difference'); /* only for debugging */
             }
 
             console.log('run correctly' + newSupply); /* only for debugging */
