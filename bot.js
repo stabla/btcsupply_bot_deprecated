@@ -1,14 +1,27 @@
 var twit = require('twit'),
-    config_tw = require('./config_tw_local');
+    config_tw = require('./config');
     
 var Twitter = new twit(config_tw);
 
 
 
+const getLastSupplyValue = function() {
+    fs = require('fs')
+    fs.readFile('lastSupply.txt', 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(data);
+    });
+}
+
+var lastSupply = getLastSupplyValue();
+
+
 // Post a tweet ==================
-var postTweet = function () {
+var postTweet = function (messages) {
     var params = {
-        status: 'messages' // Tweet to post
+        status: messages;// Tweet to post
     }
 
     // Update status: post the tweet
@@ -21,38 +34,63 @@ var postTweet = function () {
     });
 }
 
-// tweet immediatly when program is running...
-//postTweet();
 
-// retweet in every 50 secs
-//setInterval(postTweet, 50000);
-
-
-
-
-const https = require('https');
-
-const options = {
-    host : 'api.coinmarketcap.com', 
-    port : 443,
-    path : '/v1/ticker/bitcoin/', 
-    method : 'GET'
-};
-
-
-var callback = function(response) {
-    var a = new Array(),
-        ourReponse;
-
-    response.on('data', function(d) {
-        a += d; 
-    });
+var differentSupply = function(difference) {
+    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. $Bitcoin $BTC #Bitcoin #BTC.";
     
-    response.on('end', function() {
-        b = JSON.parse(a);
-        return b[0].total_supply;
-    });
+    postTweet(messages);
     
+    var fs = require('fs'); 
+    var wstream = fs.createWriteStream('lastSupply.txt');
+    wstream.write(lastSupply.toString());
+    wstream.end();
+
+
 }
 
-var req = https.request(options, callback).end();
+
+var makeRequest = (function selfInvoking() {
+
+    const https = require('https');
+    const options = {
+        host : 'api.coinmarketcap.com', 
+        port : 443,
+        path : '/v1/ticker/bitcoin/', 
+        method : 'GET'
+    };
+
+    var callback = function(response) {
+        var a = new Array(),
+            ourReponse;
+
+        // Make a request to get the json 
+        response.on('data', function(d) {
+            a += d; 
+        });
+
+        // When the request is ended, format correctly and show the value.
+        response.on('end', function() {
+            b = JSON.parse(a);
+            newSupply = parseInt(b[0].total_supply); // Returned value from the request
+
+            if (newSupply >== lastSupply) {
+                // Call function and tweet about it
+                var difference = ( newSupply - lastSupply );
+                lastSupply = newSupply;
+                
+                differentSupply( difference );
+            }
+
+            console.log('run correctly' + c); /* only for debugging */
+        });
+
+    }
+
+    var req = https.request(options, callback).end();
+    return selfInvoking;
+    
+} ())
+
+
+// Relaunch the main function each hour
+setInterval(makeRequest, 3600000);
