@@ -1,0 +1,25 @@
+{
+  "name": "btcsupply_bot",
+  "version": "1.0.0",
+  "description": "Twitter bot to alert when BTC supply is becoming bigger",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stabla/btcsupply_bot.git"
+  },
+  "keywords": [
+    "btc",
+    "bitcoin",
+    "twitter",
+    "bot"
+  ],
+  "author": "stabla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stabla/btcsupply_bot/issues"
+  },
+  "homepage": "https://github.com/stabla/btcsupply_bot#readme"
+}
