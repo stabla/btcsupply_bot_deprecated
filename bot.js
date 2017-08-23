@@ -74,7 +74,7 @@ var makeRequest = (function selfInvoking() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
 
-            if (newSupply >== lastSupply) {
+            if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = ( newSupply - lastSupply );
                 lastSupply = newSupply;
