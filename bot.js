@@ -81,7 +81,7 @@ var makeRequest = (function selfInvoking() {
                 differentSupply( difference );
             }
 
-            console.log('run correctly' + c); /* only for debugging */
+            console.log('run correctly' + newSupply); /* only for debugging */
         });
 
     }
