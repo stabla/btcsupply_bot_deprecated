@@ -25,7 +25,7 @@ var postTweet = function (messages) {
 
 
 var differentSupply = function(difference) {
-    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. $Bitcoin $BTC #Bitcoin #BTC.";
+    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. $BTC #Bitcoin #BTC.";
     
     postTweet(messages);
 }
