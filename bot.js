@@ -21,7 +21,7 @@ var lastSupply = getLastSupplyValue();
 // Post a tweet ==================
 var postTweet = function (messages) {
     var params = {
-        status: messages;// Tweet to post
+        status: messages // Tweet to post
     }
 
     // Update status: post the tweet
