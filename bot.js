@@ -1,22 +1,17 @@
-var twit = require('twit'),
+/*var twit = require('twit'),
     config_tw = require('./config');
     
-var Twitter = new twit(config_tw);
+var Twitter = new twit(config_tw);*/
 
+fs = require('fs')
+    
+var lastSupply = fs.readFileSync('lastSupply.txt', 'utf8',         function (err,data) {
+        if (err) {
+            return console.log(err);
+        }
 
-
-const getLastSupplyValue = function() {
-    fs = require('fs')
-    fs.readFile('lastSupply.txt', 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log(data);
+        return data;
     });
-}
-
-var lastSupply = getLastSupplyValue();
-
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -43,7 +38,7 @@ var differentSupply = function(difference) {
     
     var fs = require('fs'); 
     var wstream = fs.createWriteStream('lastSupply.txt');
-    wstream.write(lastSupply.toString());
+    wstream.write(lastSupply);
     wstream.end();
 
 
@@ -74,17 +69,21 @@ var makeRequest = (function selfInvoking() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
 
+            console.log(newSupply >= lastSupply);
+            console.log(newSupply + ' new supply ');
+            console.log(lastSupply + ' last supply');
+            
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = ( newSupply - lastSupply );
                 lastSupply = newSupply;
                 
-                differentSupply( difference );
+                //differentSupply( difference );
                 
                 console.log('in difference'); /* only for debugging */
             }
 
-            console.log('run correctly' + newSupply); /* only for debugging */
+            console.log('run correctly ' + newSupply); /* only for debugging */
         });
 
     }
@@ -96,4 +95,4 @@ var makeRequest = (function selfInvoking() {
 
 
 // Relaunch the main function each hour
-setInterval(makeRequest, 3600000);
+//setInterval(makeRequest, 3600000);
