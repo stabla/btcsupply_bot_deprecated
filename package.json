@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Twitter bot to alert when BTC supply is becoming bigger",
   "main": "bot.js",
+  "dependencies": {
+        "twit": "^2.2.9"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bot.js"
