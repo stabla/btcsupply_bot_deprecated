@@ -1,6 +1,5 @@
 ## [Bitcoin Supply Bot](https://www.twitter.com/btcsupply)
 
-Coded in: NodeJS
+This little script is coded in NodeJS and is turning on Heroku.
 
-API:  [CryptoCurrency Market Capitalizations](https://coinmarketcap.com/)
-      [Twitter REST APIs](https://dev.twitter.com/rest/public)
+API used to make it: [CryptoCurrency Market Capitalizations](https://coinmarketcap.com/) & [Twitter REST APIs](https://dev.twitter.com/rest/public)
