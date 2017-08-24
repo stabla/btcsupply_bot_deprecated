@@ -81,4 +81,4 @@ var makeRequest = (function selfInvoking() {
 
 
 // Relaunch the main function each 6 hours
-//setInterval(makeRequest, 21600000);
+setInterval(makeRequest, 21600000);
