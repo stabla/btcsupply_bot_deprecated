@@ -24,8 +24,8 @@ var postTweet = function (messages) {
 }
 
 
-var differentSupply = function(difference) {
-    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. $BTC #Bitcoin #BTC.";
+var differentSupply = function(difference, price) {
+    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents $" + (difference * price) + " $BTC #Bitcoin #BTC.";
     
     postTweet(messages);
 }
@@ -54,6 +54,7 @@ var makeRequest = (function selfInvoking() {
         response.on('end', function() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
+            priceUSD = parseInt(b[0].price_usd);
 
             console.log(newSupply >= lastSupply);
             
@@ -62,7 +63,7 @@ var makeRequest = (function selfInvoking() {
                 var difference = ( newSupply - lastSupply );
                 lastSupply = newSupply;
                 
-                differentSupply( difference );
+                differentSupply(difference, priceUSD);
                 
                 console.log('in difference'); /* only for debugging */
             }
