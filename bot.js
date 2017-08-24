@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 165523037;
+var lastSupply = 16523037;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -59,8 +59,6 @@ var makeRequest = (function selfInvoking() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
             priceUSD = parseInt(b[0].price_usd);
-
-            console.log(newSupply >= lastSupply);
             
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
