@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16522337;
+var lastSupply = 16522612;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -24,8 +24,12 @@ var postTweet = function (messages) {
 }
 
 
+function format(n, currency) {
+    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+}
+
 var differentSupply = function(difference, price) {
-    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents $" + (difference * price) + " $BTC #Bitcoin #BTC.";
+    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents " + format((difference * price), "$") + " $BTC #Bitcoin #BTC.";
     
     postTweet(messages);
 }
