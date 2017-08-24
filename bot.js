@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16522662;
+var lastSupply = 165523037;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -29,7 +29,7 @@ function format(n, currency) {
 }
 
 var differentSupply = function(difference, price) {
-    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents " + format((difference * price), '$') + ". (At " + format(price, '$') + " per $BTC #Bitcoin #BTC).";
+    var messages = " There's new " + difference + " Bitcoin generated.\n \n It represents " + format((difference * price), '$') + ". (At " + format(price, '$') + " per $BTC #Bitcoin #BTC). \n New Supply :" + lastSupply;
     
     postTweet(messages);
 }
@@ -77,7 +77,7 @@ var makeRequest = (function selfInvoking() {
     var req = https.request(options, callback).end();
     return selfInvoking;
     
-} ())
+}());
 
 
 // Relaunch the main function each 6 hours
