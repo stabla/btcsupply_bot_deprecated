@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16523273;
+var lastSupply = 16523300;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
