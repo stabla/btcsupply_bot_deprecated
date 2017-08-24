@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16522612;
+var lastSupply = 16522662;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -18,7 +18,7 @@ var postTweet = function (messages) {
             console.log(error);
             console.log('Tweet already posted');
         }
-        console.log(tweet); // Tweet body.
+        
         console.log('Tweeted correctly posted.');
     });
 }
@@ -29,7 +29,7 @@ function format(n, currency) {
 }
 
 var differentSupply = function(difference, price) {
-    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents " + format((difference * price), "$") + " $BTC #Bitcoin #BTC.";
+    var messages = " There's new " + difference + " Bitcoin generated since the last tweet. It represents " + format((difference * price), '$') + ". (At " + format(price, '$') + " per $BTC #Bitcoin #BTC).";
     
     postTweet(messages);
 }
@@ -68,11 +68,8 @@ var makeRequest = (function selfInvoking() {
                 lastSupply = newSupply;
                 
                 differentSupply(difference, priceUSD);
-                
-                console.log('in difference'); /* only for debugging */
             }
 
-            console.log('run correctly ' + newSupply); /* only for debugging */
         });
 
     }
@@ -83,5 +80,5 @@ var makeRequest = (function selfInvoking() {
 } ())
 
 
-// Relaunch the main function each hour
-//setInterval(makeRequest, 3600000);
+// Relaunch the main function each 6 hours
+//setInterval(makeRequest, 21600000);
