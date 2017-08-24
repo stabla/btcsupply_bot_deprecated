@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16523300;
+var lastSupply = 16523312;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -24,12 +24,14 @@ var postTweet = function (messages) {
 }
 
 
-function format(n, currency) {
-    return currency + " " + n.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-}
+Number.prototype.format = function(n, x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+};
+
 
 var differentSupply = function(difference, price) {
-    var messages = " There's new " + difference + " Bitcoin generated.\n \n It represents " + format((difference * price), '$') + ". (At " + format(price, '$') + " per $BTC #Bitcoin #BTC). \n New Supply : " + format(lastSupply, '');
+    var messages = " There's new " + difference.format() + " Bitcoin generated.\n \n It represents $" + (difference * price).format() + " (At $" + price.format() + " per $BTC #Bitcoin #BTC) \n New Supply : " + lastSupply.format() + "";
     
     postTweet(messages);
 }
@@ -59,6 +61,7 @@ var makeRequest = (function selfInvoking() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
             priceUSD = parseInt(b[0].price_usd);
+            
             
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
