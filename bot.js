@@ -76,7 +76,7 @@ var makeRequest = function selfInvoking() {
     }
 
     var req = https.request(options, callback).end();
-    return selfInvoking;
+    /*return selfInvoking;*/
     
 };
 
