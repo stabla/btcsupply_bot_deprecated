@@ -4,7 +4,11 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 var lastSupply = 0;
 
-// Post a tweet ==================
+
+// ==========================================================================//
+/*
+        Post a tweet 
+*/
 var postTweet = function (messages) {
     var params = {
         status: messages // Tweet to post
@@ -21,7 +25,13 @@ var postTweet = function (messages) {
     });
 }
 
-
+// ==========================================================================//
+/*
+        Get the most recent tweet, and extract the lastSupply
+            (because Heroku have a cycling of 24hours, 
+                it means it restart the app each times,
+                then, incrementing a variable is useless)
+*/
 var getInlastTweet = (function selfInvoking() {
     var params = {
         count: 1
@@ -29,12 +39,14 @@ var getInlastTweet = (function selfInvoking() {
 
     Twitter.get('statuses/user_timeline', params, function (error, data, responses) {
         if (error) {
-            console.log('bonjour y a error');
+            console.log('Erreur');
         }
 
+        // get the text property from the json 
         var a = data[0].text;
+        // get the 10 last string from the text
         var b = a.substr(a.length - 10);
-
+        // delete the ',' and return just the entire number, in int
         lastSupply = parseInt(b.split(',').join(''));
 
     });
@@ -43,23 +55,37 @@ var getInlastTweet = (function selfInvoking() {
 }());
 
 
+
+
+// ==========================================================================//
+/*
+        Function to format numbers
+*/
 var format = function (x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 };
 
-
+/*
+        This function is setting message and ordering to tweet it
+*/
 var differentSupply = function (difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(lastSupply) + "";
 
-    // postTweet(messages);
+    postTweet(messages);
 }
+// ==========================================================================//
 
 
+
+
+
+// ==========================================================================//
+/*
+        Bittrex request (to get BTC supply)
+*/
 var makeRequest = function selfInvoking() {
-
-
     const https = require('https');
     const options = {
         host: 'api.coinmarketcap.com',
@@ -88,9 +114,9 @@ var makeRequest = function selfInvoking() {
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = (newSupply - lastSupply);
-
                 differentSupply(difference, priceUSD);
             }
+            
         });
     }
 
@@ -98,5 +124,5 @@ var makeRequest = function selfInvoking() {
 };
 
 
-// Relaunch the main function each 6 hours (21600000 ms)
+// Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
 setInterval(makeRequest, 21600000);
