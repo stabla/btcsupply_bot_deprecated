@@ -4,7 +4,7 @@ var twit = require('twit'),
 var Twitter = new twit(config_tw);
 
     
-var lastSupply = 16523312;
+var lastSupply = 16524612;
 
 // Post a tweet ==================
 var postTweet = function (messages) {
@@ -37,7 +37,7 @@ var differentSupply = function(difference, price) {
 }
 
 
-var makeRequest = (function selfInvoking() {
+var makeRequest = function selfInvoking() {
 
     const https = require('https');
     const options = {
@@ -78,7 +78,7 @@ var makeRequest = (function selfInvoking() {
     var req = https.request(options, callback).end();
     return selfInvoking;
     
-}());
+};
 
 
 // Relaunch the main function each 6 hours
