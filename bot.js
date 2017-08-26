@@ -70,8 +70,8 @@ var format = function (x) {
 /*
         This function is setting message and ordering to tweet it
 */
-var differentSupply = function (difference, price) {
-    var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format((lastSupply + difference)) + "";
+var differentSupply = function (currentSupply, difference, price) {
+    var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
     postTweet(messages);
 }
@@ -110,11 +110,12 @@ var makeRequest = (function selfInvoking() {
             b = JSON.parse(a);
             newSupply = parseInt(b[0].total_supply); // Returned value from the request
             priceUSD = parseInt(b[0].price_usd);
+            
 
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = (newSupply - lastSupply);
-                differentSupply(difference, priceUSD);
+                differentSupply(newSupply, difference, priceUSD);
             }
             
         });
