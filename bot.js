@@ -86,7 +86,7 @@ var differentSupply = function (currentSupply, difference, price) {
 /*
         Bittrex request (to get BTC supply)
 */
-var makeRequest = function selfInvoking() {
+var makeRequest = (function selfInvoking() {
     
     
     getInlastTweet();
@@ -131,8 +131,8 @@ var makeRequest = function selfInvoking() {
         var req = https.request(options, callback).end();
     }
 
-};
+}());
 
 
 // Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 5000);
+setInterval(makeRequest, 21600000);
