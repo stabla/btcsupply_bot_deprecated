@@ -80,6 +80,12 @@ var differentSupply = function (currentSupply, difference, price) {
 
 
 
+function sleep(miliseconds) {
+   var currentTime = new Date().getTime();
+
+   while (currentTime + miliseconds >= new Date().getTime()) {
+   }
+}
 
 
 // ==========================================================================//
@@ -126,7 +132,8 @@ var makeRequest = (function selfInvoking() {
     }
     
     if(lastSupply == 0) {
-        setTimeout(makeRequest, 100);
+        sleep(100);
+        makeRequest;
     } else {
         var req = https.request(options, callback).end();
     }
