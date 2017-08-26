@@ -125,7 +125,7 @@ var makeRequest = (function selfInvoking() {
     }
     
     if(lastSupply !== 0) {
-        https.request(options, callback.end();
+        https.request(options, callback).end();
     } else {
         setTimeout(makeRequest, 100);
     }
