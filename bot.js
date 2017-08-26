@@ -73,7 +73,6 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
-    console.log(messages);
     postTweet(messages);
 }
 // ==========================================================================//
@@ -86,7 +85,7 @@ var differentSupply = function (currentSupply, difference, price) {
 /*
         Bittrex request (to get BTC supply)
 */
-var makeRequest = (function selfInvoking() {
+var makeRequest = function selfInvoking() {
     
     
     getInlastTweet();
@@ -131,7 +130,7 @@ var makeRequest = (function selfInvoking() {
         var req = https.request(options, callback).end();
     }
 
-}());
+};
 
 
 // Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
