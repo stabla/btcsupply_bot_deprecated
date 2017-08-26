@@ -94,7 +94,7 @@ var makeRequest = (function selfInvoking() {
         method: 'GET'
     };
 
-    var callback = (function (response) {
+    var callback = function (response) {
         var a = new Array(),
             ourReponse;
 
@@ -121,6 +121,7 @@ var makeRequest = (function selfInvoking() {
     }
 
     var req = https.request(options, callback).end();
+    return selfInvoking;
 }());
 
 
