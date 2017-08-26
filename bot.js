@@ -71,7 +71,7 @@ var format = function (x) {
         This function is setting message and ordering to tweet it
 */
 var differentSupply = function (difference, price) {
-    var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(lastSupply + difference) + "";
+    var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format((lastSupply + difference)) + "";
 
     postTweet(messages);
 }
