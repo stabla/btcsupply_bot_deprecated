@@ -80,19 +80,13 @@ var differentSupply = function (currentSupply, difference, price) {
 
 
 
-function sleep(miliseconds) {
-   var currentTime = new Date().getTime();
-
-   while (currentTime + miliseconds >= new Date().getTime()) {
-   }
-}
 
 
 // ==========================================================================//
 /*
         Bittrex request (to get BTC supply)
 */
-var makeRequest = (function selfInvoking() {
+var makeRequest = function selfInvoking() {
     
     
     getInlastTweet();
@@ -132,14 +126,12 @@ var makeRequest = (function selfInvoking() {
     }
     
     if(lastSupply == 0) {
-        sleep(100);
-        makeRequest;
+        setTimeout(makeRequest, 100);
     } else {
         var req = https.request(options, callback).end();
     }
 
-    return selfInvoking;
-}());
+};
 
 
 // Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
