@@ -73,7 +73,8 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
-    postTweet(messages);
+    console.log(messages);
+    /*postTweet(messages);*/
 }
 // ==========================================================================//
 
@@ -124,10 +125,10 @@ var makeRequest = (function selfInvoking() {
         });
     }
     
-    if(lastSupply !== 0) {
-        https.request(options, callback).end();
-    } else {
+    if(lastSupply == 0) {
         setTimeout(makeRequest, 100);
+    } else {
+        var req = https.request(options, callback).end();
     }
 
     return selfInvoking;
