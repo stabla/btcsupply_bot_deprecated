@@ -85,7 +85,7 @@ var differentSupply = function (difference, price) {
 /*
         Bittrex request (to get BTC supply)
 */
-var makeRequest = function selfInvoking() {
+var makeRequest = (function selfInvoking() {
     const https = require('https');
     const options = {
         host: 'api.coinmarketcap.com',
@@ -121,8 +121,8 @@ var makeRequest = function selfInvoking() {
     }
 
     var req = https.request(options, callback).end();
-    return selfInvoking
-}()) ;
+    return selfInvoking;
+}());
 
 
 // Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
