@@ -74,7 +74,7 @@ var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
     console.log(messages);
-    /*postTweet(messages);*/
+    postTweet(messages);
 }
 // ==========================================================================//
 
