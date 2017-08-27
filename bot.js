@@ -9,7 +9,7 @@ var lastSupply = 0;
 /*
         Post a tweet 
 */
-var postTweet = function (messages) {
+var postTweet = function(messages) {
     var params = {
         status: messages // Tweet to post
     }
@@ -32,7 +32,7 @@ var postTweet = function (messages) {
                 it means it restart the app each times,
                 then, incrementing a variable is useless)
 */
-var getInlastTweet = (function selfInvoking() {
+var getInlastTweet = function() {
     var params = {
         count: 1
     }
@@ -50,9 +50,7 @@ var getInlastTweet = (function selfInvoking() {
         lastSupply = parseInt(b.split(',').join(''));
 
     });
-
-    return selfInvoking;
-}());
+};
 
 
 
@@ -73,6 +71,7 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
+
     postTweet(messages);
 }
 // ==========================================================================//
@@ -83,11 +82,9 @@ var differentSupply = function (currentSupply, difference, price) {
 
 // ==========================================================================//
 /*
-        Bittrex request (to get BTC supply)
+        Coinmarketcap request (to get BTC supply)
 */
-var makeRequest = function selfInvoking() {
-    
-    
+var makeRequest = function() {
     getInlastTweet();
     
     const https = require('https');
@@ -99,9 +96,7 @@ var makeRequest = function selfInvoking() {
     };
 
     var callback = function (response) {
-        var a = new Array(),
-            ourReponse;
-
+        var a = new Array();
 
         // Make a request to get the json 
         response.on('data', function (d) {
@@ -111,13 +106,14 @@ var makeRequest = function selfInvoking() {
         // When the request is ended, format correctly and show the value.
         response.on('end', function () {
             b = JSON.parse(a);
-            newSupply = parseInt(b[0].total_supply); // Returned value from the request
-            priceUSD = parseInt(b[0].price_usd);
+            var newSupply = parseInt(b[0].total_supply); // Returned value from the request
+            var priceUSD = parseInt(b[0].price_usd);
             
 
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = (newSupply - lastSupply);
+                lastSupply = 0; // initialize value for next tweet
                 differentSupply(newSupply, difference, priceUSD);
             }
             
@@ -132,6 +128,6 @@ var makeRequest = function selfInvoking() {
 
 };
 
-
-// Launch the Bittrex API to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 21600000);
+makeRequest();
+// Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
+setInterval(makeRequest, 5000);
