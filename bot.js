@@ -72,6 +72,7 @@ var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
 
+    lastSupply = 0; // initialize value for next tweet
     postTweet(messages);
 }
 // ==========================================================================//
@@ -113,7 +114,6 @@ var makeRequest = function() {
             if (newSupply >= lastSupply) {
                 // Call function and tweet about it
                 var difference = (newSupply - lastSupply);
-                lastSupply = 0; // initialize value for next tweet
                 differentSupply(newSupply, difference, priceUSD);
             }
             
@@ -129,4 +129,4 @@ var makeRequest = function() {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 21600000);
+setInterval(makeRequest, 7200000);
