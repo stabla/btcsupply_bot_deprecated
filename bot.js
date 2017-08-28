@@ -7,7 +7,7 @@ var lastSupply = 0;
 
 // ==========================================================================//
 /*
-        Post a tweet 
+        Post a tweet
 */
 var postTweet = function(messages) {
     var params = {
@@ -28,7 +28,7 @@ var postTweet = function(messages) {
 // ==========================================================================//
 /*
         Get the most recent tweet, and extract the lastSupply
-            (because Heroku have a cycling of 24hours, 
+            (because Heroku have a cycling of 24hours,
                 it means it restart the app each times,
                 then, incrementing a variable is useless)
 */
@@ -42,7 +42,7 @@ var getInlastTweet = function() {
             console.log('Erreur');
         }
 
-        // get the text property from the json 
+        // get the text property from the json
         var a = data[0].text;
         // get the 10 last string from the text
         var b = a.substr(a.length - 10);
@@ -71,9 +71,10 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
-
+    console.log('before init: ' + lastSupply);
     lastSupply = 0; // initialize value for next tweet
-    postTweet(messages);
+    console.log('after init:' + lastSupply);
+    //postTweet(messages);
 }
 // ==========================================================================//
 
@@ -87,7 +88,7 @@ var differentSupply = function (currentSupply, difference, price) {
 */
 var makeRequest = function() {
     getInlastTweet();
-    
+
     const https = require('https');
     const options = {
         host: 'api.coinmarketcap.com',
@@ -99,7 +100,7 @@ var makeRequest = function() {
     var callback = function (response) {
         var a = new Array();
 
-        // Make a request to get the json 
+        // Make a request to get the json
         response.on('data', function (d) {
             a += d;
         });
@@ -109,17 +110,22 @@ var makeRequest = function() {
             b = JSON.parse(a);
             var newSupply = parseInt(b[0].total_supply); // Returned value from the request
             var priceUSD = parseInt(b[0].price_usd);
-            
+
 
             if (newSupply >= lastSupply) {
+
+              console.log('NewSupply: ' + newSupply);
+              console.log('lastSupply: ' + lastSupply);
+              console.log('difference: ' + (newSupply - lastSupply) );
+
                 // Call function and tweet about it
                 var difference = (newSupply - lastSupply);
                 differentSupply(newSupply, difference, priceUSD);
             }
-            
+
         });
     }
-    
+
     if(lastSupply == 0) {
         setTimeout(makeRequest, 100);
     } else {
@@ -129,4 +135,4 @@ var makeRequest = function() {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 7200000);
+setInterval(makeRequest, 1800000);
