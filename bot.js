@@ -74,7 +74,7 @@ var differentSupply = function (currentSupply, difference, price) {
     console.log('before init: ' + lastSupply);
     lastSupply = 0; // initialize value for next tweet
     console.log('after init:' + lastSupply);
-    //postTweet(messages);
+    postTweet(messages);
 }
 // ==========================================================================//
 
@@ -135,4 +135,4 @@ var makeRequest = function() {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 1800000);
+setInterval(makeRequest, 3600000);
