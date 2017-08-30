@@ -71,9 +71,6 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price) {
     var messages = " There's new " + format(difference) + " Bitcoin generated.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + "";
 
-    console.log('before init: ' + lastSupply);
-    lastSupply = 0; // initialize value for next tweet
-    console.log('after init:' + lastSupply);
     postTweet(messages);
 }
 // ==========================================================================//
@@ -87,7 +84,6 @@ var differentSupply = function (currentSupply, difference, price) {
         Coinmarketcap request (to get BTC supply)
 */
 var makeRequest = function() {
-    getInlastTweet();
 
     const https = require('https');
     const options = {
@@ -117,21 +113,32 @@ var makeRequest = function() {
               console.log('NewSupply: ' + newSupply);
               console.log('lastSupply: ' + lastSupply);
               console.log('difference: ' + (newSupply - lastSupply) );
+                
+                
+                
+                getInlastTweet();
 
                 // Call function and tweet about it
-                var difference = (newSupply - lastSupply);
-                differentSupply(newSupply, difference, priceUSD);
+                var difference;
+                
+                if(lastSupply == 0) {
+                    setTimeout(makeRequest, 100);
+                } else {
+                    difference = (newSupply - lastSupply);
+                    
+                    console.log('before init: ' + lastSupply);
+                    lastSupply = 0; // initialize value for next tweet
+                    console.log('after init:' + lastSupply);
+                    differentSupply(newSupply, difference, priceUSD);
+                    
+                }  
             }
 
         });
     }
 
-    if(lastSupply == 0) {
-        setTimeout(makeRequest, 100);
-    } else {
-        var req = https.request(options, callback).end();
-    }
 
+        var req = https.request(options, callback).end(); 
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
