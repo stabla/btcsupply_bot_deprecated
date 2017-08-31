@@ -96,6 +96,8 @@ var makeRequest = function() {
     var callback = function (response) {
         var a = new Array();
 
+        getInlastTweet();
+        
         // Make a request to get the json
         response.on('data', function (d) {
             a += d;
@@ -107,38 +109,28 @@ var makeRequest = function() {
             var newSupply = parseInt(b[0].total_supply); // Returned value from the request
             var priceUSD = parseInt(b[0].price_usd);
 
-
-            if (newSupply >= lastSupply) {
-
-              console.log('NewSupply: ' + newSupply);
-              console.log('lastSupply: ' + lastSupply);
-              console.log('difference: ' + (newSupply - lastSupply) );
-                
-                
-                
-                getInlastTweet();
-
-                // Call function and tweet about it
-                var difference;
-                
-                if(lastSupply == 0) {
+            if(lastSupply == 0) {
                     setTimeout(makeRequest, 100);
-                } else {
-                    difference = (newSupply - lastSupply);
-                    
-                    console.log('before init: ' + lastSupply);
-                    lastSupply = 0; // initialize value for next tweet
-                    console.log('after init:' + lastSupply);
-                    differentSupply(newSupply, difference, priceUSD);
-                    
-                }  
-            }
+            }  else {
+                    if (newSupply >= lastSupply) {
+                          console.log('NewSupply: ' + newSupply);
+                          console.log('lastSupply: ' + lastSupply);
+                          console.log('difference: ' + (newSupply - lastSupply) );
+        
+                          // Call function and tweet about it
+                          var difference;
+                          difference = (newSupply - lastSupply);
 
+                          console.log('before init: ' + lastSupply);
+                          lastSupply = 0; // initialize value for next tweet
+                          console.log('after init:' + lastSupply);
+                          differentSupply(newSupply, difference, priceUSD);
+                    }                     
+            }                  
         });
     }
 
-
-        var req = https.request(options, callback).end(); 
+    var req = https.request(options, callback).end(); 
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
