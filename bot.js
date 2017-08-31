@@ -106,6 +106,8 @@ var makeRequest = function() {
         // When the request is ended, format correctly and show the value.
         response.on('end', function () {
             b = JSON.parse(a);
+            
+            lastSupply = 0; // initialize value for next tweet
             var newSupply = parseInt(b[0].total_supply); // Returned value from the request
             var priceUSD = parseInt(b[0].price_usd);
 
@@ -121,9 +123,6 @@ var makeRequest = function() {
                           var difference;
                           difference = (newSupply - lastSupply);
 
-                          console.log('before init: ' + lastSupply);
-                          lastSupply = 0; // initialize value for next tweet
-                          console.log('after init:' + lastSupply);
                           differentSupply(newSupply, difference, priceUSD);
                     }                     
             }                  
@@ -134,4 +133,4 @@ var makeRequest = function() {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 3600000);
+setInterval(makeRequest, 180000);
