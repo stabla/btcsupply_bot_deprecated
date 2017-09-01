@@ -128,7 +128,7 @@ var makeRequest = function () {
                         difference = (newSupply - lastSupply);
                         lastSupply = 0; // initialize value for next tweet
 
-                        /* differentSupply(newSupply, difference, priceUSD);*/
+                        differentSupply(newSupply, difference, priceUSD);
                     }
 
                 }, 1500); 
