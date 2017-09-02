@@ -49,9 +49,6 @@ var getInlastTweet = function () {
         b = a.substr(a.length - 10);
         // delete the ',' and return just the entire number, in int
         lastSupply = parseInt(b.split(',').join(''));
-
-        lastSupply = c;
-
     });
 };
 
@@ -141,4 +138,4 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 21600000);
+setInterval(makeRequest, 14400000);
