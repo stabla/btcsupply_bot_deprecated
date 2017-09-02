@@ -42,14 +42,13 @@ var getInlastTweet = function () {
         if (error) {
             console.log('Erreur');
         }
-        var a, b, c;
+        var a, b;
         // get the text property from the json
         a = data[0].text;
         // get the 10 last string from the text
         b = a.substr(a.length - 10);
         // delete the ',' and return just the entire number, in int
-        c = parseInt(b.split(',').join(''));
-        console.log('ici on a la valeur : ' + c);
+        lastSupply = parseInt(b.split(',').join(''));
 
         lastSupply = c;
 
@@ -142,4 +141,4 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 3600000);
+setInterval(makeRequest, 21600000);
