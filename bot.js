@@ -138,4 +138,4 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 10800000);
+setInterval(makeRequest, 21600000);
