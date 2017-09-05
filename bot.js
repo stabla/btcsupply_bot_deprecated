@@ -69,7 +69,7 @@ var format = function (x) {
         This function is setting message and ordering to tweet it
 */
 var differentSupply = function (currentSupply, difference, price, percentage) {
-        var messages = format(difference) + " Bitcoin mined since last tweet.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + " \n Supply progress: " + percentage;
+        var messages = format(difference) + " Bitcoin mined since last tweet.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #Bitcoin #BTC) \n New Supply : " + format(currentSupply) + " \n Supply progress : " + percentage + " %";
 
         postTweet(messages);
     }
@@ -139,4 +139,4 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 21600000);
+setInterval(makeRequest, 10800000);
