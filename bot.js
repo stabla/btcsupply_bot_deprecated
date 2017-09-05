@@ -128,7 +128,7 @@ var makeRequest = function () {
                         differentSupply(newSupply, difference, priceUSD, percentage);
                     }
 
-                }, 1500); 
+                }, 2000); 
             }
             
             
