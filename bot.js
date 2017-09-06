@@ -121,7 +121,7 @@ var makeRequest = function () {
                         // Call function and tweet about it
                         var difference;
                            
-                        percentage = Math.round(lastSupply/newSupply)*100;
+                        percentage = Math.round(newSupply/21000000)*100;
                         difference = (newSupply - lastSupply);
                         lastSupply = 0; // initialize value for next tweet
 
