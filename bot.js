@@ -119,9 +119,7 @@ var makeRequest = function () {
                         console.log('difference: ' + (newSupply - lastSupply));
 
                         // Call function and tweet about it
-                        var difference;
-                           
-                        percentage = Math.round(newSupply/21000000)*100;
+                        percentage = ((newSupply/21000000)*100).toFixed(2);
                         difference = (newSupply - lastSupply);
                         lastSupply = 0; // initialize value for next tweet
 
@@ -139,4 +137,4 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 10800000);
+setInterval(makeRequest, 21600000);
