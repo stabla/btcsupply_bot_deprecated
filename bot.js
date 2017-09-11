@@ -45,7 +45,7 @@ var getInlastTweet = function () {
         var a, b;
         // get the text property from the json
         a = data[0].text;
-        // get the 10 last string from the text
+        // get the 30 last string from the text, to extract last supply
         b = a.substr(a.length - 30);
         // delete the ',' and return just the entire number, in int
         lastSupply = parseInt(b.split(',').join(''));
