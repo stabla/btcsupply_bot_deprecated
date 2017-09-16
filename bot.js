@@ -126,10 +126,13 @@ var makeRequest = function () {
                         differentSupply(newSupply, difference, priceUSD, percentage);
                     }
 
-                }, 2000); 
+                }, 2000);
+            } else {
+              // Only for debugging
+              console.log('LastSupply not equal to 0, or did not get the last value. lastSupply: ' + lastSupply);
             }
-            
-            
+
+
         });
     }
 
@@ -137,4 +140,5 @@ var makeRequest = function () {
 };
 
 // Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
-setInterval(makeRequest, 21600000);
+setInterval(makeRequest, 3600000);
+
