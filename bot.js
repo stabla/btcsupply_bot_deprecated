@@ -11,7 +11,7 @@ var lastSupply = 0;
 */
 var postTweet = function (messages) {
     var params = {
-        status: messages // Tweet to post
+        status: messages
     }
 
     // Update status: post the tweet
@@ -19,11 +19,12 @@ var postTweet = function (messages) {
         if (error) {
             console.log(error);
             console.log('Tweet already posted');
-        }
-
-        console.log('Tweeted correctly posted.');
+        } else {
+		console.log('Tweeted correctly posted.');
+	}
     });
-}
+
+};
 
 
 // ==========================================================================//
@@ -34,11 +35,9 @@ var postTweet = function (messages) {
                 then, incrementing a variable is useless)
 */
 var getInlastTweet = function () {
-    var params = {
-        count: 1
-    }
 
-    Twitter.get('statuses/user_timeline', params, function (error, data, responses) {
+    // get the last tweet (count 1)
+    Twitter.get('statuses/user_timeline', 1, function (error, data, responses) {
         if (error) {
             console.log('Erreur');
         }
@@ -60,7 +59,7 @@ var getInlastTweet = function () {
         Function to format numbers
 */
 var format = function (x) {
-    var parts = x.toString().split(".");
+    parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 };
@@ -69,14 +68,11 @@ var format = function (x) {
         This function is setting message and ordering to tweet it
 */
 var differentSupply = function (currentSupply, difference, price, percentage) {
-        var messages = format(difference) + " #Bitcoin mined since last tweet.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #BTC) \n New Supply: " + format(currentSupply) + " \n Progress: " + percentage + " %";
+        messages = format(difference) + " #Bitcoin mined since last tweet.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #BTC) \n New Supply: " + format(currentSupply) + " \n Progress: " + percentage + " %";
 
         postTweet(messages);
-    }
-    // ==========================================================================//
-
-
-
+};
+ // ==========================================================================//
 
 
 // ==========================================================================//
@@ -85,7 +81,7 @@ var differentSupply = function (currentSupply, difference, price, percentage) {
 */
 var makeRequest = function () {
 
-    getInlastTweet()
+    getInlastTweet();
     const https = require('https');
     const options = {
         host: 'api.coinmarketcap.com',
@@ -96,7 +92,6 @@ var makeRequest = function () {
 
     var callback = function (response) {
         var a = new Array();
-
 
         // Make a request to get the json
         response.on('data', function (d) {
@@ -119,26 +114,21 @@ var makeRequest = function () {
                         console.log('difference: ' + (newSupply - lastSupply));
 
                         // Call function and tweet about it
-                        percentage = ((newSupply/21000000)*100).toFixed(2);
                         difference = (newSupply - lastSupply);
-                        lastSupply = 0; // initialize value for next tweet
 
+                        percentage = ((newSupply/21000000)*100).toFixed(2);
+
+                        lastSupply = 0; // initialize value for next tweet
                         differentSupply(newSupply, difference, priceUSD, percentage);
                     }
 
                 }, 10000);
-            } else {
-              // Only for debugging
-              console.log('LastSupply not equal to 0, or did not get the last value. lastSupply: ' + lastSupply);
             }
-
-
-        });
-    }
+        }); // end of response
+    };
 
     var req = https.request(options, callback).end();
 };
 
-// Launch the Coinmarketcap request to get BTC supply each 6 hours (21600000 ms)
+// Launch the Coinmarketcap request to get BTC supply each 3 hours (10800000 ms)
 setInterval(makeRequest, 10800000);
-
