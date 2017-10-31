@@ -9,7 +9,7 @@ NodeJS bot files : bot.js, config.js, package.json
 
 ##### Python
 I have made the same thing but in Python, just for fun.
-You can the script with `python bot.py` 
+You can run the script with `python bot.py` 
 
 Python bot files : bot.py, twitter_acces.py
 
