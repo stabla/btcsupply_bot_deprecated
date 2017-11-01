@@ -35,7 +35,6 @@ var postTweet = function (messages) {
                 then, incrementing a variable is useless)
 */
 var getInlastTweet = function () {
-
     // get the last tweet (count 1)
     Twitter.get('statuses/user_timeline', 1, function (error, data, responses) {
         if (error) {
