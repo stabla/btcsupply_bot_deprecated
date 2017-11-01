@@ -70,8 +70,7 @@ def formatIt(x):
     
 def differentSupply(currentSupply, difference, price, percentage):
     message = formatIt(difference) + " #Bitcoin mined since last tweet.\n \n It represents $" + formatIt((difference * price)) + " (At $" + formatIt(price) + " per $BTC #BTC) \n New supply: " + formatIt(currentSupply) + " \n Progress: " + str(percentage) + " %"
-    ##tweet(message)
-    print(message)
+    tweet(message)
     
 
 def makeRequest():
