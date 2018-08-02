@@ -79,7 +79,7 @@ def makeRequest():
     lastSupply = int(getInLastTweet())
     
     a = requests.get('https://api.coinmarketcap.com/v2/ticker/1')
-    b = a.json()[']
+    b = a.json()['data']
 
     newSupply = (b['total_supply'])
     priceUSD = (b['quotes']['USD']['price'])
