@@ -52,7 +52,7 @@ def tweet(message):
 '''
 
 host = 'api.coinmarketcap.com'
-path = '/v1/ticket/bitcoin/'
+path = '/v2/ticket/1/'
 method = 'GET'
 
 
@@ -78,11 +78,11 @@ def makeRequest():
     global lastSupply
     lastSupply = int(getInLastTweet())
     
-    a = requests.get('https://api.coinmarketcap.com/v1/ticker/bitcoin')
-    b = a.json()[0]
+    a = requests.get('https://api.coinmarketcap.com/v2/ticker/1')
+    b = a.json()[']
 
     newSupply = (b['total_supply'])
-    priceUSD = (b['price_usd'])
+    priceUSD = (b['quotes']['USD']['price'])
 
     ## Create values
     if newSupply >= lastSupply:
