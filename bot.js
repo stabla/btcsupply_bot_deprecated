@@ -85,7 +85,7 @@ var makeRequest = function () {
     const options = {
         host: 'api.coinmarketcap.com',
         port: 443,
-        path: '/v1/ticker/bitcoin/',
+        path: '/v2/ticker/1/',
         method: 'GET'
     };
 
@@ -101,8 +101,8 @@ var makeRequest = function () {
         response.on('end', function () {
             b = JSON.parse(a);
 
-            var newSupply = parseInt(b[0].total_supply); // Returned value from the request
-            var priceUSD = parseInt(b[0].price_usd);
+            var newSupply = parseInt(b.data.total_supply); // Returned value from the request
+            var priceUSD = parseInt(b.data.quotes.USD.price);
 
             if (lastSupply == 0) {
                 setTimeout(function () {
