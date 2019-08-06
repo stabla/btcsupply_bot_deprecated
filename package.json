@@ -1,10 +1,12 @@
 {
-  "name": "btcsupply_bot",
+  "name": "request-promise",
   "version": "1.0.0",
   "description": "Twitter bot to alert when BTC supply is becoming bigger",
   "main": "bot.js",
   "dependencies": {
-        "twit": "^2.2.9"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "twit": "^2.2.9"
   },
   "devDependencies": {},
   "scripts": {
