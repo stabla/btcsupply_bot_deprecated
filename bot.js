@@ -46,10 +46,9 @@ var getInlastTweet = function () {
         // get the text property from the json
         a = data[0].text;
         // get the 30 last string from the text, to extract last supply
-        b = a.substr(a.length - 30);
+        b = a.substr(a.length - 84, a.length - 125);
         // delete the ',' and return just the entire number, in int
         lastSupply = parseInt(b.split(',').join(''));
-
         console.log(lastSupply);
     });
 };
@@ -73,7 +72,7 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price, percentage) {
         messages = format(difference) + " #Bitcoin mined since last tweet.\n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #BTC) \n New Supply: " + format(currentSupply) + " \n Progress: " + percentage + " %";
 
-        postTweet(messages);
+        //postTweet(messages);
 };
 // ==========================================================================//
 
@@ -90,7 +89,7 @@ var makeRequest = function () {
                 method: 'GET',
                 uri: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=1&convert=USD',
                 headers: {
-                'X-CMC_PRO_API_KEY': '6a100269-8e51-4e49-b5a1-aed1fe1fe889'
+                        'X-CMC_PRO_API_KEY': config_tw.token_coinmarketcap_api
                 },
                 json: true,
                 gzip: true

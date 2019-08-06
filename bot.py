@@ -1,3 +1,8 @@
+## /!\
+## COINMARKETCAP API CHANGED THEREFORE THIS IS FULLY DEPRECATED
+## TO SEE WORKING VERSION, SEE BOT.JS
+## /!\
+
 # bot.py - run with python bot.py
 '''
     IMPORT WHAT WE NEED
