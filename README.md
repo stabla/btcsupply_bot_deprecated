@@ -7,7 +7,7 @@ To run the script : `node bot.js`
 
 NodeJS bot files : bot.js, config.js, package.json
 
-##### Python
+##### Python - DEPRECATED
 I have made the same thing but in Python, just for fun.
 You can run the script with `python bot.py` 
 
