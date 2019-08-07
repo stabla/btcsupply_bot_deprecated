@@ -72,7 +72,7 @@ var format = function (x) {
 var differentSupply = function (currentSupply, difference, price, percentage) {
         messages = format(difference) + " #Bitcoin mined since last tweet.\n \n  New Supply: " + format(currentSupply) + " \n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #BTC) \n Progress: " + percentage + " %";
 
-        //postTweet(messages);
+        postTweet(messages);
 };
 // ==========================================================================//
 
