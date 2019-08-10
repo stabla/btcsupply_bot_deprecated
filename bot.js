@@ -30,6 +30,12 @@ var postTweet = function (messages) {
 
 // ==========================================================================//
 /*
+        EXTRACT NUMBER IN STRING
+*/
+var extract_amount = function(string) {
+        return string.match("[0-9]+[\.,0-9]*")[0];
+}
+/*
         Get the most recent tweet, and extract the lastSupply
             (because Heroku have a cycling of 24hours,
                 it means it restart the app each times,
@@ -46,7 +52,10 @@ var getInlastTweet = function () {
         // get the text property from the json
         a = data[0].text;
         // get the 30 last string from the text, to extract last supply
-        b = a.substr(a.length - 84, a.length - 125);
+        b = a.substring(48, 78);
+        console.log(b);
+        console.log("fixed", extract_amount(b))
+        b = extract_amount(b);
         // delete the ',' and return just the entire number, in int
         lastSupply = parseInt(b.split(',').join(''));
         console.log(lastSupply);
@@ -58,7 +67,7 @@ var getInlastTweet = function () {
 
 // ==========================================================================//
 /*
-        Function to format numbers
+        FUNCTION TO FORMAT NUMBERS
 */
 var format = function (x) {
         parts = x.toString().split(".");
@@ -66,11 +75,24 @@ var format = function (x) {
         return parts.join(".");
 };
 
+
+
+/*
+        FUNCTION TO FORMAT AND FIX NUMBER WITHOUT DECIMALS
+*/
+var format_full = function(x) {
+        var a = Number(x).toFixed(0);
+        var b = format(a);
+        return b;
+}     
+
+
 /*
         This function is setting message and ordering to tweet it
 */
 var differentSupply = function (currentSupply, difference, price, percentage) {
-        messages = format(difference) + " #Bitcoin mined since last tweet.\n \n  New Supply: " + format(currentSupply) + " \n \n It represents $" + format((difference * price)) + " (At $" + format(price) + " per $BTC #BTC) \n Progress: " + percentage + " %";
+        
+        messages = format(difference) + " #Bitcoin mined since last tweet.\n \n New Supply: " + format(currentSupply) + " \n \n It represents $" + format_full((difference * price)) + " (At $" + format_full(price) + " per $BTC #BTC) \n Progress: " + percentage + " %";
 
         postTweet(messages);
 };
@@ -104,8 +126,8 @@ var makeRequest = function () {
                                 console.log("lastSupply === 0.");
                                 setTimeout(function () {
 
-                                if (new_supply >= lastSupply) {
-                                        console.log("new_supply >= lastSupply ");
+                                if (new_supply > lastSupply) {
+                                        console.log("new_supply > lastSupply ");
                                         console.log('new_supply: ' + new_supply);
                                         console.log('lastSupply: ' + lastSupply);
                                         console.log('difference: ' + (new_supply - lastSupply));
@@ -131,4 +153,4 @@ var makeRequest = function () {
     
 // Launch the Coinmarketcap request to get BTC supply each 12 hours (43200000 ms)
 console.log("Runned.");
-setInterval(makeRequest, 43200000);
+setInterval(makeRequest, 5000);

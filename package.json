@@ -4,6 +4,7 @@
   "description": "Twitter bot to alert when BTC supply is becoming bigger",
   "main": "bot.js",
   "dependencies": {
+    "core-util-is": "^1.0.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "twit": "^2.2.9"

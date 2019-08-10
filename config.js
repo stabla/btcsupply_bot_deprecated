@@ -3,5 +3,5 @@ module.exports = {
     consumer_secret: process.env.BOT_CONSUMER_SECRET,
     access_token: process.env.BOT_ACCESS_TOKEN,
     access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET,
-    token_coinmarketcap_api: process.env.process.env.COINMARKETCAP_API
+    token_coinmarketcap_api: process.env.COINMARKETCAP_API
 }
