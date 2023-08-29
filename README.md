@@ -1,5 +1,7 @@
 ## [Bitcoin Supply Bot](https://www.twitter.com/btcsupply)
 
+Project is no longer maintained. The source coude remains valid but the bot has been discontinued.
+
 ##### NodeJS (main bot, actually running)
 
 This little script is coded in NodeJS and is turning on Heroku.
@@ -12,8 +14,6 @@ I have made the same thing but in Python, just for fun.
 You can run the script with `python bot.py` 
 
 Python bot files : bot.py, twitter_acces.py
-
-
 
 ##### API 
 API used to make it: [CryptoCurrency Market Capitalizations](https://coinmarketcap.com/) & [Twitter REST APIs](https://dev.twitter.com/rest/public)
